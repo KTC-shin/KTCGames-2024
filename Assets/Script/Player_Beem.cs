@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Player_Beem : MonoBehaviour
 {
-   
     public GameObject beamPrefab;   // ビームのPrefab
     public Camera mainCamera;       // メインカメラ
     public float spawnInterval = 0.1f; // 生成間隔（秒）
     public float beamSpeed = 10f;   // ビームの速度
+    public LayerMask playerLayer;   // プレイヤーのレイヤーマスク
 
     private bool isSpawning = false;
+    private bool isBlockedByPlayer = false;
 
     void Update()
     {
@@ -37,10 +38,28 @@ public class Player_Beem : MonoBehaviour
             Ray ray = mainCamera.ScreenPointToRay(mousePosition);
             RaycastHit hit;
 
+            // プレイヤーに対するレイキャストを行う
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, playerLayer))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    // ヒットしたオブジェクトがプレイヤー自身の場合、ビームを発射しない
+                    isBlockedByPlayer = true;
+                    yield return null;
+                    continue;
+                }
+            }
+
+            // プレイヤーに触れていない場合
+            if (isBlockedByPlayer)
+            {
+                isBlockedByPlayer = false;
+            }
+
             Vector3 targetPosition;
             if (Physics.Raycast(ray, out hit))
             {
-                // レイがヒットした場合、ヒット位置をターゲットとする
+                // レイが他のオブジェクトにヒットした場合、ヒット位置をターゲットとする
                 targetPosition = hit.point;
             }
             else
@@ -50,7 +69,7 @@ public class Player_Beem : MonoBehaviour
             }
 
             // プレイヤーの位置をベースにビームを生成
-            Vector3 spawnPosition = transform.position;
+            Vector3 spawnPosition = transform.position + (targetPosition - transform.position).normalized * 1f;
 
             // ビームのPrefabを生成し、プレイヤーの位置に配置
             GameObject beam = Instantiate(beamPrefab, spawnPosition, Quaternion.identity);
@@ -75,6 +94,3 @@ public class Player_Beem : MonoBehaviour
         }
     }
 }
-
-
-
