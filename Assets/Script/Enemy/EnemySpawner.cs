@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
             Transform spawnPoint = spawnPoints[spawnIndex];
 
             // エネミーをスポーン地点に生成
-            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            GameObject gameObject1 = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
         }
     }
 }
