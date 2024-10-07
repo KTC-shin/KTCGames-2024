@@ -17,7 +17,8 @@ GameObject:
   - component: {fileID: 2947319722374409474}
   - component: {fileID: 7900796156062159559}
   - component: {fileID: -3584914594376741353}
-  m_Layer: 0
+  - component: {fileID: -5869631160054280683}
+  m_Layer: 2
   m_Name: beem
   m_TagString: Laser
   m_Icon: {fileID: 0}
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd4fe1a0b7645d499564fe6b799a014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 5
+  pushForce: 20
 --- !u!114 &-3584914594376741353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,5 +188,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9205c00c53077ba47b45673570cc8d30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5869631160054280683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428580395205287954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1d4200b1985a1d48ab6545e25af74d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

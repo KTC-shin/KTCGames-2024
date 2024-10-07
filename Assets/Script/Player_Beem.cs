@@ -18,8 +18,12 @@ public class Player_Beem : MonoBehaviour
         // マウスの左クリックを検出
         if (Input.GetMouseButtonDown(0))
         {
-            isSpawning = true;
-            StartCoroutine(SpawnBeam());
+            // カーソルがプレイヤーに触れていない場合のみビームを発射
+            if (!IsCursorOnPlayer())
+            {
+                isSpawning = true;
+                StartCoroutine(SpawnBeam());
+            }
         }
 
         // 左クリックを放したら生成を停止
@@ -27,34 +31,50 @@ public class Player_Beem : MonoBehaviour
         {
             isSpawning = false;
         }
+
+        // カーソルがプレイヤーから離れた後、まだ左クリックが押されていればビームを再発射
+        if (Input.GetMouseButton(0) && isBlockedByPlayer && !IsCursorOnPlayer())
+        {
+            isBlockedByPlayer = false;
+            isSpawning = true;
+            StartCoroutine(SpawnBeam());
+        }
+    }
+
+    // カーソルがプレイヤー上にあるかどうかを確認するメソッド
+    private bool IsCursorOnPlayer()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        Ray ray = mainCamera.ScreenPointToRay(mousePosition);
+        RaycastHit hit;
+
+        // プレイヤーに対するレイキャストを行う
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, playerLayer))
+        {
+            if (hit.collider.gameObject == gameObject)
+            {
+                // カーソルがプレイヤーに触れている場合
+                isBlockedByPlayer = true;
+                return true;
+            }
+        }
+        return false;
     }
 
     private IEnumerator SpawnBeam()
     {
         while (isSpawning)
         {
-            // カーソルのスクリーン座標をワールド座標に変換
+            // カーソルがプレイヤーに触れていない場合のみビームを生成
+            if (isBlockedByPlayer)
+            {
+                yield return null;
+                continue;
+            }
+
             Vector3 mousePosition = Input.mousePosition;
             Ray ray = mainCamera.ScreenPointToRay(mousePosition);
             RaycastHit hit;
-
-            // プレイヤーに対するレイキャストを行う
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, playerLayer))
-            {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    // ヒットしたオブジェクトがプレイヤー自身の場合、ビームを発射しない
-                    isBlockedByPlayer = true;
-                    yield return null;
-                    continue;
-                }
-            }
-
-            // プレイヤーに触れていない場合
-            if (isBlockedByPlayer)
-            {
-                isBlockedByPlayer = false;
-            }
 
             Vector3 targetPosition;
             if (Physics.Raycast(ray, out hit))

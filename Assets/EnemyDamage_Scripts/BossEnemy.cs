@@ -51,6 +51,10 @@ public class BossEnemy : MonoBehaviour
     private void Die()
     {
         Debug.Log("Boss defeated!");
+
+        // ゲームクリア判定を呼び出す
+        GameManager.Instance.CheckForVictory();
+
         Destroy(gameObject);  // ボスが死んだらオブジェクトを破壊する
     }
 }
