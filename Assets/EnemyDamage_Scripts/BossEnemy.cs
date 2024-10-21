@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BossEnemy : MonoBehaviour
@@ -51,6 +52,8 @@ public class BossEnemy : MonoBehaviour
     private void Die()
     {
         Debug.Log("Boss defeated!");
+
+        SceneManager.LoadScene("ClearScene", LoadSceneMode.Single);
 
         // ゲームクリア判定を呼び出す
         GameManager.Instance.CheckForVictory();
