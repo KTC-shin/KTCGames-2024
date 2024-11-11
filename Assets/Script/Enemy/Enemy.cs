@@ -16,5 +16,20 @@ public class Enemy : MonoBehaviour
                 playerHealth.TakeDamage(damage);
             }
         }
+
+
+        //参考コード↓
+        //if (collision.gameObject.TryGetComponent<PlayerHealth>(out PlayerHealth pHealth))
+        //{
+        //    pHealth.TakeDamage(damage);
+        //}
+
+        //if (collision.gameObject.TryGetComponent<BossEnemy>(out BossEnemy boss))
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 }
+    
+    //ToDo : やりたいこと
+    //Fix : 修正内容
