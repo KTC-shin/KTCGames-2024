@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
@@ -43,6 +44,10 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log("Player defeated!");
         // ゲームオーバー処理を追加することができます
+
+            // ゲームクリア画面を表示したり、シーンを切り替える処理を追加
+            // 例えば、シーンの切り替え:
+            SceneManager.LoadScene("GameOverScene");
     }
 
     // HPに応じて体力バーの色を更新する
