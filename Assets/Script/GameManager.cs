@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +26,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Clear!");
         // ゲームクリア画面を表示したり、シーンを切り替える処理を追加
         // 例えば、シーンの切り替え:
-        // SceneManager.LoadScene("VictoryScene");
+        SceneManager.LoadScene("ClearScene");
     }
 }
